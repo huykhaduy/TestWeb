@@ -9,7 +9,7 @@
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
-SET time_zone = "+00:00";
+SET time_zone = "+07:00";
 
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
@@ -158,7 +158,6 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `status`, `email_verified_at`, `password`, `session_id`, `updated_at`, `created_at`) VALUES
 (6, 'admin', 'admin@gmail.com', 1, 1, NULL, '$2y$10$IRdIxzJxOtch73OF8Ssv9.xHCJFYpm4dfduVE8DXg9ljd3e9EuoHm', 'grCXUnQmo0nvflchxqNGFav1xd9noGeN7kypLYTV', '2022-10-24 04:02:16', '2022-10-24 03:08:02'),
 (7, 'Xuân Ngọc', 'user@gmail.com', 0, 1, NULL, '$2y$10$fJx9J7s5YEL8GPE8QSRnLOOIhynt6WPHVSFNAWG6brPchuAFZPsBy', 'MkHkUPwvWM7sqqXdrgZJ5ibyD8mIT3EOrSyaTB63', '2022-10-24 04:21:40', '2022-10-24 02:28:49');
-
 --
 -- Chỉ mục cho các bảng đã đổ
 --
