@@ -29,9 +29,9 @@ SET time_zone = "+07:00";
 
 CREATE TABLE `cate` (
   `id` int(12) NOT NULL,
-  `name_cate` varchar(256) DEFAULT NULL,
-  `created_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
-  `updated_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
+   `created_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `updated_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6)`name_cate` varchar(256) DEFAULT NULL,
+ 
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

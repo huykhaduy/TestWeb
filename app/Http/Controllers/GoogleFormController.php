@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\GoogleForm\GoogleAPI;
 use Google\Service\Forms\CorrectAnswers;
 use Illuminate\Http\Request;
@@ -48,6 +49,7 @@ class GoogleFormController extends Controller
     }
 
     public function show(){
-        
+        $form = User::all();
+        return view('test_google', ['jos' => json_encode($form)]);
     }
 }

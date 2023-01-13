@@ -12,7 +12,8 @@
         "fideloper/proxy": "^4.0",
         "google/apiclient": "^2.12.1",
         "laravel/framework": "5.8.*",
-        "laravel/tinker": "^1.0"
+        "laravel/tinker": "^1.0",
+        "moontoast/math": "^1.2"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",

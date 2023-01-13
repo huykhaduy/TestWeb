@@ -6,5 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 class Choice extends Model
 {
-    use HasUlids;
+    protected $table = 'choice';
+    protected $primaryKey = 'choiceId';
+    public $timestamps = false;
 }
