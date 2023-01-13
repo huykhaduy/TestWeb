@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/testForm', 'GoogleFormController')->name("getForm");
+Route::get('/testForm', 'GoogleFormController@show')->name("getForm");
 Route::get('/login', 'MyLoginController@getLogin')->name("getLogin");
 Route::post('/login', 'MyLoginController@postLogin')->name("postLogin");
 Route::get('/register', 'MyLoginController@getRegister')->name("getRegister");

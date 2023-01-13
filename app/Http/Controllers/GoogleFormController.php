@@ -15,7 +15,7 @@ class GoogleFormController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
      */
-    public function __invoke(Request $request)
+    public function goLogin(Request $request)
     {
         $google = new GoogleAPI();
         $form = $google->get_form_id('1wZd9WZ8mBRDcniFlM3KeGm6KbdjF-vH47T1rprLROpc');
@@ -45,5 +45,9 @@ class GoogleFormController extends Controller
             //     $item->getDescription();
         }
         return view('test_google', ['form' => $form->getItems(), 'json' => json_encode($form, JSON_PRETTY_PRINT)]);
+    }
+
+    public function show(){
+        
     }
 }
