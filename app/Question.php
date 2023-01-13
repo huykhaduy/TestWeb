@@ -13,7 +13,8 @@ class Question extends Model
     protected $keyType = 'string';
     public $timestamps = false;
 
-    public function choice(){
-        return $this->hasMany('App\Choice', 'questionId', 'questionId');
+    public function choices()
+    {
+        return $this->hasMany(Choice::class,'questionId', 'questionId');
     }
 }

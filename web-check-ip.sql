@@ -29,9 +29,9 @@ SET time_zone = "+07:00";
 
 CREATE TABLE `cate` (
   `id` int(12) NOT NULL,
-   `created_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
-  `updated_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6)`name_cate` varchar(256) DEFAULT NULL,
- 
+  `name_cate` varchar(256) DEFAULT NULL,
+  `created_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6),
+  `updated_at` timestamp(6) NOT NULL DEFAULT current_timestamp(6)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -64,7 +64,7 @@ CREATE TABLE `chapter` (
 --
 
 INSERT INTO `chapter` (`id`, `name`, `parent_id`, `lesson_link`, `updated_at`, `created_at`) VALUES
-(1, 'Chương 1', 1, 'https://docs.google.com/forms/d/e/1FAIpQLSf-Jj8ktGZkYUYYn2yWRLcXgor_Uq4QLk6yjS910sZo6cXT5Q/viewform?embedded=true', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
+(1, 'Chương 1', 1, 'https://docs.google.com/forms/d/1cXnJKKe5s1mjL7MWe3Gkpsa5ZigblNZHiMaxu4xES1w/edit', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
 (2, 'Chương 2', 1, 'https://docs.google.com/forms/d/e/1FAIpQLSfZzT2wuJl_Z8R2fhrGVT490Ic5FBL5ooRX8TFCf8TKcgWQwQ/viewform?embedded=true', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
 (3, 'Chương 3', 1, 'https://docs.google.com/forms/d/e/1FAIpQLSd7ygZy5ZT-sNs5LHkDQ3p-EYm5QRg1vpSybMY6Q9Qb11xLxQ/viewform?embedded=true', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
 (4, 'Chương 4', 1, 'https://docs.google.com/forms/d/e/1FAIpQLSfl2KHP9Z_FMusL_WXO0ERYW7WPYTPapy6I0it4pKgix1X3WA/viewform?embedded=true', '0000-00-00 00:00:00.000000', '0000-00-00 00:00:00.000000'),
@@ -158,6 +158,7 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `name`, `email`, `role`, `status`, `email_verified_at`, `password`, `session_id`, `updated_at`, `created_at`) VALUES
 (6, 'admin', 'admin@gmail.com', 1, 1, NULL, '$2y$10$IRdIxzJxOtch73OF8Ssv9.xHCJFYpm4dfduVE8DXg9ljd3e9EuoHm', 'grCXUnQmo0nvflchxqNGFav1xd9noGeN7kypLYTV', '2022-10-24 04:02:16', '2022-10-24 03:08:02'),
 (7, 'Xuân Ngọc', 'user@gmail.com', 0, 1, NULL, '$2y$10$fJx9J7s5YEL8GPE8QSRnLOOIhynt6WPHVSFNAWG6brPchuAFZPsBy', 'MkHkUPwvWM7sqqXdrgZJ5ibyD8mIT3EOrSyaTB63', '2022-10-24 04:21:40', '2022-10-24 02:28:49');
+
 --
 -- Chỉ mục cho các bảng đã đổ
 --

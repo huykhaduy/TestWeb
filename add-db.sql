@@ -25,7 +25,7 @@ CREATE TABLE choice(
     image_url varchar(512) not null default "", 
     choice_value text,
     isTrue boolean not null DEFAULT false,
-    questionId varchar(100),
+    questionId varchar(100)
 );
 
 CREATE TABLE chapter_user_status(

@@ -33,20 +33,30 @@ class FormQuestionController extends Controller
         // ]);
         $questions = Chapter::getQuestions($chapter);
         // $questions = Question::find('9836f6b8-d818-4493-bf09-2aea5f286bbc')->first();
-        return response()->json([
-            'questions' => $questions,
-        ]);
+        // $questions = Chapter::find(1)->with('choices')->first();
+        // $questions = Question::where('chapterId', $chapter)->with('choices')->first();
+        // return response()->json([
+        //     'questions' => $questions,
+        // ]);
+
+        return response()->json(
+            ['questions' => $questions],
+            200,
+            ['Content-Type' => 'application/json;charset=UTF-8', 'Charset' => 'utf-8'],
+            JSON_UNESCAPED_UNICODE
+        );
+
         // $users = User::where('id','<', 10)->first();
         // return response()->json([
         //     'questions' => json_encode($users)
         // ]);
     }
 
-    private function toJSONFormat($question_groups){
-        foreach( $question_groups as $question_level){
-            foreach( $question_level as $question_item){
-                Question::find($question_item['id'])->delete();
-            }
-        }
-    }
+    // private function toJSONFormat($question_groups){
+    //     foreach( $question_groups as $question_level){
+    //         foreach( $question_level as $question_item){
+    //             Question::find($question_item['id'])->delete();
+    //         }
+    //     }
+    // }
 }

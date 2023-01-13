@@ -11,6 +11,8 @@ class Chapter extends Model
     //
     protected $table = 'chapter';
     protected $primaryKey = 'id';
+    public $timestamps = false;
+
 
     public static function getQuestions(string $chapterId){
         $chapter = Chapter::find($chapterId);
@@ -59,7 +61,7 @@ class Chapter extends Model
                     $choiceItem->choice_value = $choice->getValue();
                     $choiceItem->questionId = $question_id;
                     foreach($answers as $answer){
-                        if ($answer->getValue() == $choice->getValue){
+                        if (strcmp($answer->getValue(), $choice->getValue()) == 0){
                             $choiceItem->isTrue = true;
                             break;
                         }
@@ -68,19 +70,45 @@ class Chapter extends Model
                 }
             }
         }
-        // $questions = Question::where('chapterId', $chapter->id)
-        //                     -> orderBy('question_level')
-        //                     -> get();
 
-        $max_level = Question::where('chapterId', $chapter->id)->max('question_level');
-        $question_groups = array();
-        for ($i = 1; $i <= $max_level; $i++) {
-            $questions_level = Question::where('chapterId', $chapter->id)
-                ->where('question_level', $i)
-                ->inRandomOrder()->get();
-            array_push($question_groups, $questions_level);
-        }
-        return $question_groups;
+        // $max_level = Question::where('chapterId', $chapter->id)->max('question_level');
+        // $question_groups = array();
+        // for ($i = 1; $i <= $max_level; $i++) {
+        //     $questions_level = Question::where('chapterId', $chapter->id)
+        //         ->where('question_level', $i)
+        //         ->with('choices')
+        //         ->inRandomOrder()->get();
+        //     array_push($question_groups, $questions_level);
+        // }
+        $questions_level = Question::where('chapterId', $chapter->id)
+            ->inRandomOrder()
+            ->select('questionId', 'question_level')
+            ->with([
+                'choices' => function ($query) {
+                    $query->when('shuffle' == true, function ($q) {
+                        return $q->inRandomOrder()->select('choiceId', 'questionId');
+                    });
+                    $query->when('shuffle' == false, function($q){
+                        return $q->select('choiceId', 'questionId');
+                    });
+                }])
+            ->get();
+        $sort_value = $questions_level->sortBy(function ($item, $key) {
+            return $item['question_level'];
+        });
+
+        $ouput = $sort_value->values()->all();
+        return $ouput;
+
+        // $subset = collect($ouput)->map(function ($item) {
+        //     return collect($item->toArray())
+        //         ->only(['questionId', 'choices'])
+        //         ->all();
+        // });
+        // return $subset;
+        
+        // return $sort_value->values()->all();
+
     }
 
     private static function getFormIdInUrl(string $form_url){
@@ -99,7 +127,12 @@ class Chapter extends Model
         throw new \Exception('Form ID is not valid');
     }
 
-    public function questions(){
-        return $this->hasMany('App\Question', 'chapterId', 'id');
-    }
+    // public function questions(){
+    //     return $this->hasMany('App\Question', 'chapterId', 'id');
+    // }
+
+    // public function choices()
+    // {
+    //     return $this->hasManyThrough(Choice::class, Question::class, 'chapterId', 'questionId', 'id', 'questionId');
+    // }
 }
