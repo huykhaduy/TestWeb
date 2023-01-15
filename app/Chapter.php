@@ -82,14 +82,14 @@ class Chapter extends Model
         // }
         $questions_level = Question::where('chapterId', $chapter->id)
             ->inRandomOrder()
-            ->select('questionId', 'question_level')
+            ->select('questionId', 'title', 'question_description', 'question_type', 'image_url', 'point_value')
             ->with([
                 'choices' => function ($query) {
                     $query->when('shuffle' == true, function ($q) {
-                        return $q->inRandomOrder()->select('choiceId', 'questionId');
+                        return $q->inRandomOrder();
                     });
                     $query->when('shuffle' == false, function($q){
-                        return $q->select('choiceId', 'questionId');
+                        return $q;
                     });
                 }])
             ->get();
@@ -127,12 +127,20 @@ class Chapter extends Model
         throw new \Exception('Form ID is not valid');
     }
 
-    // public function questions(){
-    //     return $this->hasMany('App\Question', 'chapterId', 'id');
-    // }
+    public function questions(){
+        return $this->hasMany('App\Question', 'chapterId', 'id');
+    }
 
-    // public function choices()
-    // {
-    //     return $this->hasManyThrough(Choice::class, Question::class, 'chapterId', 'questionId', 'id', 'questionId');
-    // }
+    public function choices()
+    {
+        return $this->hasManyThrough(Choice::class, Question::class, 'chapterId', 'questionId', 'id', 'questionId');
+    }
+
+    /* 3 cách: 
+        1. Gửi cả dữ liệu random từ database
+
+        2. Gửi structure rồi từ structure yêu cầu từng câu hỏi
+
+        3. Gửi structure rồi từ structure sẽ yêu cầu từ từ
+    */
 }

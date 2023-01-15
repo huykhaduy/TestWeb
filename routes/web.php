@@ -10,9 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
 Route::get('/testForm', 'GoogleFormController@show')->name("getForm");
-Route::get('/questions/{chapter}', 'FormQuestionController@getAllQuestionInChapter')->name("getQuestions")->where('chapter', '[0-9]+');
 Route::get('/login', 'MyLoginController@getLogin')->name("getLogin");
 Route::post('/login', 'MyLoginController@postLogin')->name("postLogin");
 Route::get('/register', 'MyLoginController@getRegister')->name("getRegister");
@@ -21,6 +19,7 @@ Route::get('/logout', 'HomeController@logOut')->name("logOut");
 
 Route::middleware(['cors'])->group(function () {
     Route::get('/check-ip-config', 'AdminController@CheckIpConfig');
+    Route::get('/questions/{chapter}', 'FormQuestionController@getAllQuestionInChapter')->name("getQuestions")->where('chapter', '[0-9]+');
 });
 
 Route::middleware(['checkLogin', 'singleLogin', 'checkStatusUser'])->group(function () {
