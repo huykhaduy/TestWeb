@@ -79631,7 +79631,7 @@ new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\web-check-ip\resources\js\user-login.js */"./resources/js/user-login.js");
+module.exports = __webpack_require__(/*! /root/TestWeb/resources/js/user-login.js */"./resources/js/user-login.js");
 
 
 /***/ })

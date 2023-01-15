@@ -79822,7 +79822,7 @@ new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\web-check-ip\resources\js\ip-config.js */"./resources/js/ip-config.js");
+module.exports = __webpack_require__(/*! /root/TestWeb/resources/js/ip-config.js */"./resources/js/ip-config.js");
 
 
 /***/ })

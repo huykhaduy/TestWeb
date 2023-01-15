@@ -81,7 +81,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 4);
+/******/ 	return __webpack_require__(__webpack_require__.s = 5);
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -49663,14 +49663,14 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ 4:
+/***/ 5:
 /*!***********************************!*\
   !*** multi ./resources/js/app.js ***!
   \***********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\web-check-ip\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /root/TestWeb/resources/js/app.js */"./resources/js/app.js");
 
 
 /***/ })

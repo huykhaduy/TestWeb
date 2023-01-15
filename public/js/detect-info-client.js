@@ -1753,11 +1753,10 @@ Vue.use(element_ui__WEBPACK_IMPORTED_MODULE_0__["Icon"]);
         return x.json();
       }).then(function (_ref) {
         var ip = _ref.ip;
-        var url_check_ip = 'http://127.0.0.1:8000/check-ip-config?ip=' + ip;
+        var url_check_ip = 'http://103.116.107.249:8000/check-ip-config?ip=' + ip;
         $.getJSON(url_check_ip, function (resCheck) {
-          console.error('Thông tin trả về:');
-          console.error(resCheck);
-
+          // console.error('Thông tin trả về:')
+          // console.error(resCheck)
           if (resCheck.accept == true) {} else {
             console.log("Chặn");
             alert(resCheck.rd);
@@ -77090,8 +77089,8 @@ new Vue({
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\xampp\htdocs\web-check-ip\resources\js\detect-info-client.js */"./resources/js/detect-info-client.js");
-module.exports = __webpack_require__(/*! C:\xampp\htdocs\web-check-ip\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /root/TestWeb/resources/js/detect-info-client.js */"./resources/js/detect-info-client.js");
+module.exports = __webpack_require__(/*! /root/TestWeb/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

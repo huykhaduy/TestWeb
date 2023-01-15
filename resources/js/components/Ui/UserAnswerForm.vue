@@ -7,7 +7,8 @@
 
 <script>
 
-import axios from "axios";
+// import axios from "axios";
+import rest_api from "../../api/rest_api.js";
 
 import FormCauHoi from "./FormCauHoi"
 import MucLuc from "./MucLuc"
@@ -59,7 +60,7 @@ export default {
   methods:{
     fetchQuestionData(){
       this.isLoading = true;
-      axios.get(`http://206.189.157.75:8000/questions/${this.chapterId}`)
+      axios.get(`/questions/${this.propChapterId}`)
         .then(res => {
           this.isLoading = false;
           console.log(res);
@@ -70,6 +71,25 @@ export default {
           console.log(err);
         });
       return {};
+      // rest_api.post(`/questions/${this.propChapterId}`, null).then(
+      //           response => {
+      //               console.error('Thông tin đăng nhập trả về:')
+      //               console.error(response)
+      //               if(response.data.rc==0){
+      //                   this.thongBao('success',response.data.rd)
+      //                   if(response.data.data.role==1){
+      //                       window.open("admin","_self")
+      //                   }else{
+      //                       window.open("/","_self")
+      //                   }
+      //               }
+      //               else {
+      //                   this.thongBao('error',response.data.rd)
+      //               }
+      //               this.loading.status = false;
+      //           }
+      //       ).catch((e) => {
+      //       })
     },
 
     getLocalAnswer(){
