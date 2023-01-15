@@ -19,7 +19,7 @@
     @include('user.layout.header')
     @include('user.layout.side-bar')
     <div class="page-wrapper">
-    <div class="content container-fluid" style="padding-left: 0px;">
+    <div class="content container-fluid" style="padding-left: 0px; padding-right: 0px">
             @yield('content')
         </div>
     </div>

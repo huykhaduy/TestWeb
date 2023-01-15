@@ -50,6 +50,6 @@ class GoogleFormController extends Controller
 
     public function show(){
         $form = User::all();
-        return view('test_google', ['jos' => json_encode($form)]);
+        return view('test_google', ['json' => json_encode($form)]);
     }
 }

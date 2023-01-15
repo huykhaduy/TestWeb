@@ -18,7 +18,7 @@ class HomeController extends Controller
             $data =  DB::table('chapter')->where('id', $chap_id)
                 ->first();
         }
-        return view('user.chapter_detail',compact('data'));
+        return view('user.chapter_detail', ['data' => $data]);
     }
     public function logOut()
     {

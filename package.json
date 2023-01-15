@@ -25,6 +25,9 @@
     },
     "dependencies": {
         "bootstrap-vue": "^2.22.0",
-        "element-ui": "^2.15.10"
+        "element-ui": "^2.15.10",
+        "axios": "^1.2.2",
+        "core-js": "^3.8.3",
+        "vue": "^2.5.17"
     }
 }

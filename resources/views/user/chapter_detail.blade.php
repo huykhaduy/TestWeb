@@ -6,7 +6,7 @@
 @endsection
 @section('content')
     <div id="user-form">
-        <user-answer-form form-name="{{$data->name}}" prop-chapter-id="{{$data->name}}"/>
+        <user-answer-form form-name="{{$data->name}}" chapter-id="{{$data->id}}"></user-answer-form>
     </div>
 @endsection
 

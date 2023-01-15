@@ -3,8 +3,8 @@
     <h6 class="bg-primary text-white py-3 px-3 text-center">{{ formName }}</h6>
     <div id="form_body" v-if="currentQuestion" class="px-sm-5 px-4">
       <div class="d-flex justify-content-center mb-2 my-1">
-        <p class="mr-3 mr-sm-5 mb-0"><BIconCheckCircleFill class="text-success fs-1"></BIconCheckCircleFill> Đúng: {{ countRightAnswer }}</p>
-        <p class="mr-3 mr-sm-5 mb-0"><BIconXCircleFill class="text-danger fs-1"></BIconXCircleFill> Sai: {{ countFailAnswer }}</p>
+        <p class="mr-3 mr-sm-5 mb-0"><BIconCheckCircleFill class="text-success"></BIconCheckCircleFill> Đúng: {{ countRightAnswer }}</p>
+        <p class="mr-3 mr-sm-5 mb-0"><BIconXCircleFill class="text-danger"></BIconXCircleFill> Sai: {{ countFailAnswer }}</p>
         <p class="mr-3 mr-sm-5 mb-0"><BIconQuestionCircleFill class="text-info"></BIconQuestionCircleFill> Chưa làm: {{ countNotDoneAnswer }}</p>
       </div>
       <p class="mt-3 mt-sm-3 output-content" :class="{'dung':isRightChoice, 'sai': isRightChoice === false}">
@@ -19,8 +19,8 @@
       <div id="answers-box" class="answer-container mt-3" v-bind:style="marginBottomAnswer">
         <div v-if="getQuestionType === this.radioType">
           <b-form-radio-group v-model="selectedRadio" :state="isRightChoice" :name="questionName" v-slot="{ ariaDescribedby }" @change="onChange" stacked>
-            <b-form-radio class="py-md-3 py-2 pl-md-5 pl-5 pr-md-5 pr-4 my-md-3 my-2 bg-light cursor-pointer" :class="[{'success-icon': !(isRightChoice === null) && isInList(item['choice_value'],
-            rightAnswersCurrentQuestion, 'choice_value'), 'fail-icon': isRightChoice === false && selectedRadio === item['choice_value']}]"
+            <b-form-radio class="py-md-3 py-2 pl-md-5 pl-5 pr-md-5 pr-4 my-md-3 my-2 cursor-pointer" :class="[{'success-icon': !(isRightChoice === null) && isInList(item['choice_value'],
+            rightAnswersCurrentQuestion, 'choice_value'), 'fail-icon': isRightChoice === false && selectedRadio === item['choice_value']}, {'bg-light': !isDarkMode()}]"
                           v-for="item in currentQuestion.choices" v-bind:key="item['choiceId']" :value="item['choice_value']" :aria-describedby="ariaDescribedby"
                           :disabled="selectedRadio !== ''">
               <div class="ml-1 output-content cursor-pointer" v-if="!item['image_url']">{{ item['choice_value'] }}</div>
@@ -34,8 +34,8 @@
         </div>
         <div v-if="getQuestionType === this.checkboxType">
           <b-form-checkbox-group v-model="selectedCheckBox" :name="questionName" v-slot="{ ariaDescribedby }" stacked>
-            <b-form-checkbox class="py-md-3 py-2 pl-md-5 pl-5 pr-md-5 pr-4 my-md-3 my-2 bg-light cursor-pointer" :class="{'success-icon': !(isRightChoice === null) && isInList(item['choice_value'], rightAnswersCurrentQuestion, 'choice_value'),
-             'fail-icon': isRightChoice === false && isInList(item['choice_value'], selectedCheckBox, 'choice_value')}"
+            <b-form-checkbox class="py-md-3 py-2 pl-md-5 pl-5 pr-md-5 pr-4 my-md-3 my-2 cursor-pointer" :class="[{'success-icon': !(isRightChoice === null) && isInList(item['choice_value'], rightAnswersCurrentQuestion, 'choice_value'),
+             'fail-icon': isRightChoice === false && isInList(item['choice_value'], selectedCheckBox, 'choice_value')}, {'bg-light': !isDarkMode()}]"
                              v-for="item in currentQuestion.choices" v-bind:key="item['choiceId']" :value="item['choice_value']" :aria-describedby="ariaDescribedby"
                              :disabled="selectValue.length > 0">
               <div class="ml-1 output-content cursor-pointer" v-if="!item['image_url']">{{ item['choice_value'] }}</div>
@@ -140,7 +140,6 @@ export default {
         return this.answers.data;
       },
       set(val){
-        console.log('send to parent');
         this.$emit('updateAnswer', val);
       }
     },
@@ -156,7 +155,6 @@ export default {
           isRightChoice: this.isRightChoice,
         });
         let deepCopy = [...this.answerData]
-        console.log(deepCopy)
         if (this.currentAnswer){
           deepCopy[this.answerData.indexOf(this.currentAnswer)] = myAns;
         }
@@ -233,7 +231,6 @@ export default {
 
     onChange(){
       this.currentAnswer = this.selectValue;
-      console.log("Change");
       this.changeQuestionTimer = setTimeout(this.nextPage, 1800);
     },
 
@@ -265,6 +262,10 @@ export default {
       this.currentIndex = 0;
       this.prepareSelectedData();
       this.$bvModal.hide('bv-modal-mucluc');
+    },
+
+    isDarkMode(){
+      return document.body.classList.contains('darkmode');
     }
   },
 
@@ -282,7 +283,7 @@ export default {
   },
 
   mounted() {
-    let answerHeight = (this.$refs.mobileNav.clientHeight) > 0 ? this.$refs.mobileNav.clientHeight + 50: 0;
+    let answerHeight = (this.$refs.mobileNav?.clientHeight ?? 0) > 0 ? this.$refs.mobileNav.clientHeight + 50: 0;
     Vue.set(this.marginBottomAnswer, 'margin-bottom', `${answerHeight}px`);
     console.log(answerHeight);
   }
@@ -329,14 +330,14 @@ html{
 
 .success-icon input ~ .custom-control-label::before,
 .success-icon input:checked ~ .custom-control-label::before{
-  background-image: url("/public/icons8-done-64.png") !important;
+  background-image: url("/assets/img/icons8-done-64.png") !important;
   background-size: cover;
   background-color: transparent !important;
 }
 
 .fail-icon input:checked ~ .custom-control-label::before{
   background-size: contain;
-  background-image: url("/public/icons8-cancel-128.png") !important;
+  background-image: url("/assets/img/icons8-cancel-128.png") !important;
   background-color: transparent !important;
 }
 
