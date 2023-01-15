@@ -16,6 +16,7 @@ mix
     .js('resources/js/user-login.js', 'public/js/user-login.js')
     .js('resources/js/ip-config.js', 'public/js/ip-config.js')
     .js('resources/js/user-management.js', 'public/js/user-management.js')
+    .js('resources/js/user-answer-form.js', 'public/js/user-answer-form.js')
     .options({
         processCssUrls: false
     })

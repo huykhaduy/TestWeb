@@ -5,5 +5,11 @@
 @section('breadcrumb')
 @endsection
 @section('content')
-    <iframe src="{{$data->lesson_link}}" frameborder="0" style="width: 100%;height:100vh"></iframe>
+    <div id="user-form">
+        <user-answer-form form-name="{{$data->name}}" prop-chapter-id="{{$data->name}}"/>
+    </div>
+@endsection
+
+@section('js_location')
+     <script src="{{asset('js/user-answer-form.js?t='.Carbon\Carbon::now()->timestamp)}}"></script>
 @endsection
