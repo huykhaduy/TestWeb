@@ -6,9 +6,8 @@
       </div>
       <div class="px-3 py-2 d-flex flex-wrap justify-content-center h-100 w-100" :class="{'panel-body': title !== 'hide'}">
         <b-button v-for="(item, index) in questions" v-bind:key="item.questionId" variant="light" class="button-question-item mx-2 my-2 rounded-lg"
-                  :class="{'success': getAnswerOfQuestionId(item.questionId)?.isRightChoice ?? false, 'selected': currentIndex === index &&
-                  ( getAnswerOfQuestionId(item.questionId)?.isRightChoice === undefined || getAnswerOfQuestionId(item.questionId)?.isRightChoice === null),
-                  'fail': getAnswerOfQuestionId(item.questionId)?.isRightChoice === false}" @click="setCurrentIndex(index)">{{ index + 1 }}
+                  :class="{'success': isRightAnswerOfQuestion(item.questionId) , 'selected': currentIndex === index && isAnswerOfQuestionNotFound(item.questionId),
+                  'fail': isWrongAnswerOfQuestion(item.questionId)}" @click="setCurrentIndex(index)">{{ index + 1 }}
         </b-button>
       </div>
       <div v-if="title !== 'hide'" class="d-flex justify-content-center mt-3">
@@ -16,6 +15,11 @@
           <BIconArrowRepeat></BIconArrowRepeat> Làm lại tất cả
         </b-button>
       </div>
+    </div>
+
+    <div id="quang-cao-pc" class="mt-3">
+      <img class="img-fluid my-2" src="https://cdn.tgdd.vn/2023/01/banner/aseri-tet-720-220-720x220-2.png">
+      <img class="img-fluid my-2" src="  https://cdn.tgdd.vn/2022/12/banner/reno8-tet-720-220-720x220-2.webp">
     </div>
   </div>
 </template>
@@ -57,6 +61,21 @@ export default {
   methods:{
     getAnswerOfQuestionId(questionId){
       return this.answers.find(ans => ans['questionId'] === questionId);
+    },
+
+    isRightAnswerOfQuestion(questionId){
+      let question = this.answers.find(ans => ans['questionId'] === questionId);
+      return !!(question && question.isRightChoice);
+    },
+
+    isWrongAnswerOfQuestion(questionId){
+      let question = this.answers.find(ans => ans['questionId'] === questionId);
+      return !!(question && question.isRightChoice === false);
+    },
+
+    isAnswerOfQuestionNotFound(questionId){
+      let question = this.answers.find(ans => ans['questionId'] === questionId);
+      return !question;
     },
 
     setCurrentIndex(index){
@@ -104,5 +123,11 @@ h6, p{
 .panel-body{
   overflow: auto;
   max-height: 430px;
+}
+
+@media screen and (min-width: 768px){
+  .panel-body{
+    max-height: 250px;
+  }
 }
 </style>

@@ -34,6 +34,9 @@ class Chapter extends Model
                 $questionItem = $item->getQuestionItem();
                 $choices = $questionItem->getQuestion()->getChoiceQuestion()->getOptions();
                 $shuffle = $questionItem->getQuestion()->getChoiceQuestion()->getShuffle();
+                if ($shuffle == null){
+                    $shuffle = false;
+                }
                 $question_type = $questionItem->getQuestion()->getChoiceQuestion()->getType();
                 $point_value = $questionItem->getQuestion()->getGrading()->getPointValue();
                 $answers = $questionItem->getQuestion()->getGrading()->getCorrectAnswers()->getAnswers();

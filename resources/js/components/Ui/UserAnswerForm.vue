@@ -1,6 +1,6 @@
 <template>
   <div class="row mx-0">
-    <FormCauHoi class="col-md-8 px-0" :questions="localQuestion.data" :form-name="formName" v-bind:answers="localAnswer" @updateAnswer="updateAnswerData" @updateQuestionIndex="updateQuestionIndex"></FormCauHoi>
+    <FormCauHoi class="col-md-8 px-0" :questions="localQuestion.data" v-bind:answers="localAnswer" @updateAnswer="updateAnswerData" @updateQuestionIndex="updateQuestionIndex"></FormCauHoi>
     <MucLuc class="col-md-4 d-md-block d-none" :questions="localQuestion.data" :answers="localAnswer.data" :question-index="localAnswer.questionIndex" @updateQuestionIndex="updateQuestionIndex" @doAgain="resetData"></MucLuc>
   </div>
 </template>
@@ -16,7 +16,7 @@ import MucLuc from "./MucLuc"
 export default {
   name: "UserAnswerForm",
   components: {MucLuc, FormCauHoi},
-  props: ['chapterId', 'formName'],
+  props: ['chapterId'],
   data(){
     return{
       // TODO: Đổi propsChapterId và formname thành property sau khi xong

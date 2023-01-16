@@ -19,12 +19,12 @@ Route::get('/logout', 'HomeController@logOut')->name("logOut");
 
 Route::middleware(['cors'])->group(function () {
     Route::get('/check-ip-config', 'AdminController@CheckIpConfig');
-    Route::get('/questions/{chapter}', 'FormQuestionController@getAllQuestionInChapter')->name("getQuestions")->where('chapter', '[0-9]+');
 });
 
 Route::middleware(['checkLogin', 'singleLogin', 'checkStatusUser'])->group(function () {
     Route::get('/', 'HomeController@getHome')->name("homeUser");
     Route::get('/showChapter', 'HomeController@showChapter')->name("showChapter");
+    Route::get('/questions/{chapter}', 'FormQuestionController@getAllQuestionInChapter')->name("getQuestions")->where('chapter', '[0-9]+');
     Route::middleware(['checkAdmin'])->group(function () {
         Route::get('/admin', 'AdminController@getHome')->name("homeAdmin");
         Route::get('/ip-config', 'AdminController@ipConfig')->name("ipConfig");

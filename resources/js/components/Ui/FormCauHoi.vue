@@ -1,18 +1,26 @@
 <template>
   <div id="form-cau-hoi">
-    <h6 class="bg-primary text-white py-3 px-3 text-center">{{ formName }}</h6>
-    <div id="form_body" v-if="currentQuestion" class="px-sm-5 px-4">
-      <div class="d-flex justify-content-center mb-2 my-1">
-        <p class="mr-3 mr-sm-5 mb-0"><BIconCheckCircleFill class="text-success"></BIconCheckCircleFill> Đúng: {{ countRightAnswer }}</p>
-        <p class="mr-3 mr-sm-5 mb-0"><BIconXCircleFill class="text-danger"></BIconXCircleFill> Sai: {{ countFailAnswer }}</p>
-        <p class="mr-3 mr-sm-5 mb-0"><BIconQuestionCircleFill class="text-info"></BIconQuestionCircleFill> Chưa làm: {{ countNotDoneAnswer }}</p>
+    <div class="form-header">
+      <div class="bg-primary text-white d-flex justify-content-center align-item-center py-2">
+        <p class="mr-3 mr-sm-5 mb-0"><BIconCheckCircleFill class="text-light"></BIconCheckCircleFill> Đúng: {{ countRightAnswer }}</p>
+        <p class="mr-3 mr-sm-5 mb-0"><BIconXCircleFill class="text-light"></BIconXCircleFill> Sai: {{ countFailAnswer }}</p>
+        <p class="mr-3 mr-sm-5 mb-0"><BIconQuestionCircleFill class="text-light"></BIconQuestionCircleFill> Chưa làm: {{ countNotDoneAnswer }}</p>
       </div>
-      <p class="mt-3 mt-sm-3 output-content" :class="{'dung':isRightChoice, 'sai': isRightChoice === false}">
+    </div>
+    <div id="form_body" v-if="currentQuestion" class="px-sm-5 px-4">
+      <p v-if="this.getQuestionType === this.radioType" class="mt-3 mt-sm-3 output-content" :class="{'dung':isRightChoice, 'sai': isRightChoice === false}">
         <b-badge v-if="isRightChoice" variant="success" style="font-size: 12px">Đúng</b-badge>
         <b-badge v-if="isRightChoice === false" variant="danger" style="font-size: 12px">Sai</b-badge>
         <b class="ml-1">Câu {{ currentIndex + 1 }}:</b> {{ currentQuestion.title }}
       </p>
-<!--      <p class="text-muted">{{ currentQuestion['question_description'] }}</p>-->
+
+       <p v-if="this.getQuestionType === this.checkboxType" class="mt-3 mt-sm-3 output-content" :class="{'dung':isRightChoice && this.currentAnswer, 'sai': isRightChoice === false && this.currentAnswer}">
+        <b-badge v-if="isRightChoice && this.currentAnswer" variant="success" style="font-size: 12px">Đúng</b-badge>
+        <b-badge v-if="isRightChoice === false && this.currentAnswer" variant="danger" style="font-size: 12px">Sai</b-badge>
+        <b class="ml-1">Câu {{ currentIndex + 1 }}:</b> {{ currentQuestion.title }}
+      </p>
+
+      <p class="text-muted" v-if="getQuestionType === this.checkboxType">(Chọn được nhiều câu hỏi, nhấn Tiếp để kiểm tra)</p>
       <div class="d-flex justify-content-center align-item-center">
         <img v-if="currentQuestion['image_url']" :src="currentQuestion['image_url']" class="img-fluid-custom">
       </div>
@@ -34,10 +42,10 @@
         </div>
         <div v-if="getQuestionType === this.checkboxType">
           <b-form-checkbox-group v-model="selectedCheckBox" :name="questionName" v-slot="{ ariaDescribedby }" stacked>
-            <b-form-checkbox class="py-md-3 py-2 pl-md-5 pl-5 pr-md-5 pr-4 my-md-3 my-2 cursor-pointer" :class="[{'success-icon': !(isRightChoice === null) && isInList(item['choice_value'], rightAnswersCurrentQuestion, 'choice_value'),
-             'fail-icon': isRightChoice === false && isInList(item['choice_value'], selectedCheckBox, 'choice_value')}, {'bg-light': !isDarkMode()}]"
-                             v-for="item in currentQuestion.choices" v-bind:key="item['choiceId']" :value="item['choice_value']" :aria-describedby="ariaDescribedby"
-                             :disabled="selectValue.length > 0">
+            <b-form-checkbox class="py-md-3 py-2 pl-md-5 pl-5 pr-md-5 pr-4 my-md-3 my-2 bg-light cursor-pointer" :class="[{'success-icon': currentAnswer !== undefined
+            && isInList(item['choice_value'], rightAnswersCurrentQuestion, 'choice_value'), 'fail-icon': currentAnswer !== undefined && isInList(item['choice_value'], selectedCheckBox) 
+            && !isInList(item['choice_value'], rightAnswersCurrentQuestion, 'choice_value')}, {'bg-light': !isDarkMode()}]" v-for="item in currentQuestion.choices" v-bind:key="item['choiceId']" 
+                  :value="item['choice_value']" :aria-describedby="ariaDescribedby" :disabled="currentAnswer !== null && currentAnswer !== undefined">
               <div class="ml-1 output-content cursor-pointer" v-if="!item['image_url']">{{ item['choice_value'] }}</div>
               <div v-if="item['image_url']" class="d-flex justify-content-start cursor-pointer">
                 <img class="mb-1 mt-1 img-fluid" :src="item['image_url']">
@@ -59,12 +67,12 @@
         </b-button>
       </div>
 
+      <div id="quang-cao-mobile" class="d-md-none d-block mt-3">
+        <img class="img-fluid my-2" src="https://cdn.tgdd.vn/2023/01/banner/aseri-tet-720-220-720x220-2.png">
+        <img class="img-fluid my-2" src="  https://cdn.tgdd.vn/2022/12/banner/reno8-tet-720-220-720x220-2.webp">
+      </div>
+
       <div id="mobile-nav" ref="mobileNav" class="form-bottom-mobile d-md-none d-flex justify-content-between bg-light position-fixed px-3 py-3">
-<!--        <div>-->
-<!--          <b-button variant="danger">-->
-<!--            <BIconArrowRepeat></BIconArrowRepeat>-->
-<!--          </b-button>-->
-<!--        </div>-->
         <div>
           <b-button variant="primary" class="mr-2" @click="previousPage">
             <BIconArrowLeftCircle></BIconArrowLeftCircle> Trước
@@ -100,14 +108,14 @@
 </template>
 
 <script>
-import Vue from "vue";
+// import Vue from "vue";
 import MucLuc from "./MucLuc";
 
 export default {
   name: "FormCauHoi",
   components: {MucLuc},
   comments: {MucLuc},
-  props: ['questions', 'formName', 'answers'],
+  props: ['questions', 'answers'],
   emits: ['updateAnswer', 'updateQuestionIndex'],
   data(){
     return{
@@ -188,8 +196,9 @@ export default {
       else if (this.getQuestionType === this.checkboxType){
         if (!myValue.length)
           return null;
-        let trueArr = this.currentQuestion.choices.filter(option => option['isTrue']);
-        return trueArr.sort().join('') === myValue.sort().join('');
+        let mapArr = trueArr.map(opt => opt['choice_value']);
+        if (mapArr)
+          return mapArr.sort().join('') === myValue.sort().join('');
       }
       return null;
     },
@@ -225,13 +234,21 @@ export default {
   },
 
   methods:{
-    isInList(val, listVal, key){
-      return listVal.find(item => item[key] === val) != null;
+    isInList(val, listVal, key = null){
+      if (key){
+        return listVal.find(item => item[key] === val) !== undefined;
+      }
+      return listVal.find(item => item === val) !== undefined;
     },
 
     onChange(){
-      this.currentAnswer = this.selectValue;
-      this.changeQuestionTimer = setTimeout(this.nextPage, 1800);
+      if (this.getQuestionType === this.radioType){
+        this.currentAnswer = this.selectValue;
+        this.changeQuestionTimer = setTimeout(this.nextPage, 1800);
+      }
+      else if (this.getQuestionType === this.checkboxType){
+        this.currentAnswer = this.selectValue;
+      }
     },
 
     prepareSelectedData(){
@@ -244,8 +261,21 @@ export default {
     },
 
     nextPage(){
-      this.currentIndex = this.currentIndex + 1 >= this.questions.length ? this.currentIndex : this.currentIndex+1;
-      clearTimeout(this.changeQuestionTimer);
+      if (this.radioType === this.getQuestionType){
+        this.currentIndex = this.currentIndex + 1 >= this.questions.length ? this.currentIndex : this.currentIndex+1;
+        clearTimeout(this.changeQuestionTimer);
+      }
+      else if(this.checkboxType === this.getQuestionType){
+        if (this.currentAnswer || this.selectValue.length === 0){
+          clearTimeout(this.changeQuestionTimer);
+          this.currentIndex = this.currentIndex + 1 >= this.questions.length ? this.currentIndex : this.currentIndex+1;
+          return;
+        }
+        this.onChange();
+        this.changeQuestionTimer = setTimeout(()=>{
+          this.currentIndex = this.currentIndex + 1 >= this.questions.length ? this.currentIndex : this.currentIndex+1;
+        }, 1800);
+      }
     },
 
     previousPage(){
@@ -275,6 +305,7 @@ export default {
       this.selectedRadio = "";
       this.selectedCheckBox = [];
       this.prepareSelectedData();
+      clearTimeout(this.changeQuestionTimer);
     },
   },
 
@@ -283,9 +314,9 @@ export default {
   },
 
   mounted() {
-    let answerHeight = (this.$refs.mobileNav?.clientHeight ?? 0) > 0 ? this.$refs.mobileNav.clientHeight + 50: 0;
-    Vue.set(this.marginBottomAnswer, 'margin-bottom', `${answerHeight}px`);
-    console.log(answerHeight);
+    // let answerHeight = (this.$refs.mobileNav?.clientHeight ?? 0) > 0 ? this.$refs.mobileNav.clientHeight + 20: 0;
+    // Vue.set(this.marginBottomAnswer, 'margin-bottom', `${answerHeight}px`);
+    // console.log(answerHeight);
   }
 }
 </script>
@@ -301,18 +332,6 @@ export default {
   text-align: center;
   min-width: 100px;
   height: auto;
-}
-
-@media screen and (max-width: 768px)  {
-  html{
-    font-size: 13px;
-  }
-}
-
-@media screen and (max-width: 576px){
-  html{
-    font-size: 12px;
-  }
 }
 
 html{
@@ -354,6 +373,38 @@ html{
 
 .cursor-pointer{
   cursor: pointer;
+}
+
+.custom-control-label::before{
+  width: 1.2rem;
+  height: 1.2rem;
+  top: 0.2rem;
+  left: -1.7rem;
+}
+
+input[type='checkbox']~.custom-control-label::after{
+  top: 0.26rem;
+  left: -1.6rem;
+}
+
+#mobile-nav{
+  height: 62px;
+}
+@media screen and (max-width: 768px)  {
+  html{
+    font-size: 13px;
+  }
+  #form-cau-hoi{
+    padding-bottom: 70px;
+  }
+}
+@media screen and (max-width: 576px){
+  html{
+    font-size: 12px;
+  }
+  #form-cau-hoi{
+    padding-bottom: 70px;
+  }
 }
 
 </style>
